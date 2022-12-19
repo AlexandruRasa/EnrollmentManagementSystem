@@ -113,6 +113,7 @@ public class Main {
                     System.out.println("---");
             }
         }
+        sc.close();
         System.out.println("Aplicatia a fost inchisa.");
     }
 }
