@@ -1,3 +1,5 @@
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
@@ -8,14 +10,35 @@ public class Main {
         System.out.println("Bun venit! Introduceti numele evenimentului: ");
         String name = sc.nextLine();
         System.out.println("Bun venit! Introduceti numarul de locuri disponibile: ");
-        int number = sc.nextInt();
+        int number;
+        try {
+            number = sc.nextInt();
+        } catch (InputMismatchException e) {
+            number = 1;
+            sc.nextLine();
+        } catch (NoSuchElementException e) {
+            sc.close();
+            System.out.println("Aplicatia a fost inchisa.");
+            return;
+        }
         GuestList event = new GuestList(name, number);
         int selection;
         String lastName, firstName, email, phoneNumber, value, newValue;
 
         while (condition) {
             System.out.println("\nAsteapta comanda (1 - help - Afiseaza lista de comenzi):");
-            int option = sc.nextInt();
+            int option = 0;
+            try {
+                option = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Optiune invalida.");
+                sc.nextLine();
+                continue;
+            } catch (NoSuchElementException e) {
+                sc.close();
+                System.out.println("Aplicatia a fost inchisa.");
+                return;
+            }
             switch (option) {
                 case 0:
                     condition = false;
@@ -53,7 +76,17 @@ public class Main {
                                         "2 - Prenume\n" +
                                         "3 - Email\n" +
                                         "4 - Numar de telefon (format \"0733386463\")\"");
-                    selection = sc.nextInt();
+                    try {
+                        selection = sc.nextInt();
+                    } catch (InputMismatchException e) {
+                        sc.nextLine();
+                        System.out.println("Optiune invalida.");
+                        continue;
+                    } catch (NoSuchElementException e) {
+                        sc.close();
+                        System.out.println("Aplicatia a fost inchisa.");
+                        return;
+                    }
                     System.out.println("Cauta: ");
                     sc.nextLine();
                     value = sc.nextLine();
@@ -65,7 +98,17 @@ public class Main {
                             "2 - Prenume\n" +
                             "3 - Email\n" +
                             "4 - Numar de telefon (format \"0733386463\")\"");
-                    selection = sc.nextInt();
+                    try {
+                        selection = sc.nextInt();
+                    } catch (InputMismatchException e) {
+                        sc.nextLine();
+                        System.out.println("Optiune invalida.");
+                        continue;
+                    } catch (NoSuchElementException e) {
+                        sc.close();
+                        System.out.println("Aplicatia a fost inchisa.");
+                        return;
+                    }
                     System.out.println("Cauta: ");
                     sc.nextLine();
                     value = sc.nextLine();
@@ -77,7 +120,17 @@ public class Main {
                             "2 - Prenume\n" +
                             "3 - Email\n" +
                             "4 - Numar de telefon (format \"0733386463\")\"");
-                    selection = sc.nextInt();
+                    try {
+                        selection = sc.nextInt();
+                    } catch (InputMismatchException e) {
+                        sc.nextLine();
+                        System.out.println("Optiune invalida.");
+                        continue;
+                    } catch (NoSuchElementException e) {
+                        sc.close();
+                        System.out.println("Aplicatia a fost inchisa.");
+                        return;
+                    }
                     System.out.println("Cauta: ");
                     sc.nextLine();
                     value = sc.nextLine();
@@ -106,7 +159,13 @@ public class Main {
                 case 12:
                     System.out.println("Cauta sirul de caractere:");
                     sc.nextLine();
-                    value = sc.nextLine();
+                    try {
+                        value = sc.nextLine();
+                    } catch (NoSuchElementException e) {
+                        sc.close();
+                        System.out.println("Aplicatia a fost inchisa.");
+                        return;
+                    }
                     System.out.println(event.partialSearchList(value));
                     break;
                 default:
