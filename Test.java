@@ -2,7 +2,7 @@ public class Test {
     public static void main(String[] args) {
 
 
-        GuestList event = new GuestList("Halloween",3);
+        Event event = new Event("Halloween",3);
         event.printConfirmedGuests();
         event.printWaitingList();
         event.availableInvitations();
