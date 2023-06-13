@@ -21,7 +21,7 @@ public class Main {
             System.out.println("Aplicatia a fost inchisa.");
             return;
         }
-        GuestList event = new GuestList(name, number);
+        Event event = new Event(name, number);
         int selection;
         String lastName, firstName, email, phoneNumber, value, newValue;
 
