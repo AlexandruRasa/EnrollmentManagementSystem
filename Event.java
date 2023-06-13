@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
-public class GuestList {
+public class Event {
 
     private final String name;
     private final int totalNumberOfInvitations;
     private ArrayList<Guest> confirmedGuests;
     private ArrayList<Guest> waitingList;
 
-    public GuestList(String name, int totalNumberOfInvitations) {
+    public Event(String name, int totalNumberOfInvitations) {
         this.name = name;
         this.totalNumberOfInvitations = totalNumberOfInvitations;
         this.confirmedGuests = new ArrayList<>(this.totalNumberOfInvitations);
