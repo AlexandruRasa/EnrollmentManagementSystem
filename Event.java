@@ -1,11 +1,13 @@
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Event {
 
     private final String name;
     private final int totalNumberOfInvitations;
-    private ArrayList<Guest> confirmedGuests;
-    private ArrayList<Guest> waitingList;
+    private List<Guest> confirmedGuests;
+    private List<Guest> waitingList;
 
     public Event(String name, int totalNumberOfInvitations) {
         this.name = name;
@@ -14,6 +16,10 @@ public class Event {
         this.waitingList = new ArrayList<>(this.totalNumberOfInvitations);
     }
 
+    /**
+     * Add a new, unique guest to the list.
+     * @return '-1' if the guest is already present, '0' if he is a guest, or the number on the waiting list
+     */
     public int addGuest(String lastName, String firstName, String email, String phoneNumber) {
         if (searchPerson(lastName, 1) != null
                 && searchPerson(firstName, 2) != null) {
@@ -32,6 +38,10 @@ public class Event {
         }
     }
 
+    /**
+     * Check if someone is already registered (either as a guest, or on the waiting list).
+     * @return Guest if present, null if not
+     */
     public Guest searchPerson(String input, int option) {
         Guest person;
         switch (option) {
@@ -40,6 +50,7 @@ public class Event {
                 if (person != null) {
                     return person;
                 } else {
+                    System.out.println("Persoana nu a fost gasita.");
                     break;
                 }
             case 2:
@@ -47,6 +58,7 @@ public class Event {
                 if (person != null) {
                     return person;
                 } else {
+                    System.out.println("Persoana nu a fost gasita.");
                     break;
                 }
             case 3:
@@ -54,6 +66,7 @@ public class Event {
                 if (person != null) {
                     return person;
                 } else {
+                    System.out.println("Persoana nu a fost gasita.");
                     break;
                 }
             case 4:
@@ -61,6 +74,7 @@ public class Event {
                 if (person != null) {
                     return person;
                 } else {
+                    System.out.println("Persoana nu a fost gasita.");
                     break;
                 }
             default:
@@ -69,6 +83,7 @@ public class Event {
         return null;
     }
 
+    //Update information of a guest
     public boolean updateInformations(String check, String newValue, int option) {
         Guest person;
         person = this.searchPerson(check, option);
@@ -106,6 +121,10 @@ public class Event {
         return false;
     }
 
+    /**
+     * Remove a guest based on first and last name. Remove the first result.
+     * @return true if removed, false if not
+     */
     public boolean deletePerson(String input, int option) {
         Guest person;
         person = this.searchPerson(input, option);
@@ -125,15 +144,21 @@ public class Event {
         return false;
     }
 
-    public ArrayList<Guest> partialSearchList(String letters) {
+    /**
+     * Find all people based on a partial value search.
+     *
+     * @param match the match we are looking for
+     * @return a list of people matching the criteria
+     */
+    public ArrayList<Guest> partialSearchList(String match) {
         ArrayList<Guest> result = new ArrayList<>();
         for (Guest i : this.confirmedGuests) {
-            if (i.partialSearch(letters)) {
+            if (i.partialSearch(match)) {
                 result.add(Guest.createCopy(i));
             }
         }
         for (Guest i : this.waitingList) {
-            if (i.partialSearch(letters)) {
+            if (i.partialSearch(match)) {
                 result.add(Guest.createCopy(i));
             }
         }
@@ -141,6 +166,7 @@ public class Event {
         return result;
     }
 
+    // Show the list of guests.
     public void printConfirmedGuests() {
         if (this.confirmedGuests.size() > 0) {
             System.out.println("Lista invitati " + this.name + ": ");
@@ -152,6 +178,8 @@ public class Event {
         }
     }
 
+
+    //Show the people are on the waiting list.
     public void printWaitingList() {
         if (this.waitingList.size() > 0) {
             System.out.println("Lista asteptare " + this.name + ": ");
@@ -163,6 +191,8 @@ public class Event {
         }
     }
 
+
+     //Show how many free spots are left.
     public void availableInvitations() {
         if (this.confirmedGuests.size() == this.totalNumberOfInvitations) {
             System.out.println("Numarul de locuri disponibile este: 0");
@@ -172,14 +202,18 @@ public class Event {
         }
     }
 
+
+    //Show how many people there are confirmed.
     public void numberOfGuests() {
         System.out.println("Numarul de participanti: " + this.confirmedGuests.size());
     }
 
+    //Show how many people there are on the waiting list.
     public void numberOfPersonsWaiting() {
         System.out.println("Dimensiunea listei de asteptare: " + this.waitingList.size());
     }
 
+    // in total, including guests.
     public void allGuests() {
         System.out.println("Numarul total de persoane: "
                             + (this.confirmedGuests.size() + this.waitingList.size()));
@@ -248,4 +282,25 @@ public class Event {
         }
         return null;
     }
+
+    public void saveData () {
+        try (ObjectOutputStream binaryFileOut = new ObjectOutputStream
+                (new BufferedOutputStream(new FileOutputStream("C:\\Users\\andu3\\Desktop\\Guests.dat")))) {
+            binaryFileOut.writeObject(this.confirmedGuests);
+            binaryFileOut.writeObject(this.waitingList);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void readData() {
+        try (ObjectInputStream binaryFileIn = new ObjectInputStream(new BufferedInputStream
+                (new FileInputStream("C:\\Users\\andu3\\Desktop\\Guests.dat")))) {
+            this.confirmedGuests = (List<Guest>) binaryFileIn.readObject();
+            this.waitingList = (List<Guest>) binaryFileIn.readObject();
+        } catch (ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

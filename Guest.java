@@ -1,11 +1,13 @@
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Guest {
+public class Guest implements Serializable {
 
     private String lastName;
     private String firstName;
     private String email;
     private String phoneNumber;
+    private static final long serialVersionUID = 2L;
 
     public Guest(String lastName, String firstName, String email, String phoneNumber) {
         this.lastName = lastName;
