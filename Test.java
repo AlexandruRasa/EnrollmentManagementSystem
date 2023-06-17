@@ -27,6 +27,10 @@ public class Test {
         System.out.println(event.partialSearchList("911"));
         event.allGuests();
         event.deletePerson("Florian" ,1);
+        event.saveData();
+        Event event0 = new Event("Halloween1",3);
+        event0.readData();
+        event.printConfirmedGuests();
 
     }
 }
