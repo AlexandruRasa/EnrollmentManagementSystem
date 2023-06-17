@@ -148,6 +148,7 @@ public class Main {
                 scanner.nextLine();
                 System.out.println("Optiune invalida.");
             } catch (NoSuchElementException e) {
+                event.saveData();
                 scanner.close();
                 System.out.println("Aplicatia a fost inchisa.");
             }
