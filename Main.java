@@ -11,7 +11,7 @@ public class Main {
         String name = scanner.nextLine();
         System.out.println("Bun venit! Introduceti numarul de locuri disponibile: ");
         int number;
-        number = checkOption(scanner);
+        number = checkOption(scanner, null);
         Event event = new Event(name, number);
         try  {
             event.readData();
@@ -24,7 +24,7 @@ public class Main {
         while (condition) {
             System.out.println("\nAsteapta comanda (1 - help - Afiseaza lista de comenzi):");
             int option;
-            option = checkOption(scanner);
+            option = checkOption(scanner, event);
             switch (option) {
                 case 0:
                     condition = false;
@@ -65,7 +65,7 @@ public class Main {
                             2 - Prenume
                             3 - Email
                             4 - Numar de telefon (format "0733386463")\"""");
-                    selection = checkOption(scanner);
+                    selection = checkOption(scanner, event);
                     System.out.println("Cauta: ");
                     scanner.nextLine();
                     value = scanner.nextLine();
@@ -78,7 +78,7 @@ public class Main {
                             2 - Prenume
                             3 - Email
                             4 - Numar de telefon (format "0733386463")\"""");
-                    selection = checkOption(scanner);
+                    selection = checkOption(scanner, event);
                     System.out.println("Cauta: ");
                     scanner.nextLine();
                     value = scanner.nextLine();
@@ -91,7 +91,7 @@ public class Main {
                             2 - Prenume
                             3 - Email
                             4 - Numar de telefon (format "0733386463")\"""");
-                    selection = checkOption(scanner);
+                    selection = checkOption(scanner, event);
                     System.out.println("Cauta: ");
                     scanner.nextLine();
                     value = scanner.nextLine();
@@ -138,7 +138,7 @@ public class Main {
     }
 
     //check if the option is a number
-    public static int checkOption (Scanner scanner) {
+    public static int checkOption (Scanner scanner, Event event) {
         int option;
         while (true) {
             try {
